@@ -64,6 +64,11 @@ void UGrabber::Grab()
 	UE_LOG(LogTemp, Warning, TEXT("grabbing"));
 }
 
+void UGrabber::Release()
+{
+	UE_LOG(LogTemp, Warning, TEXT("releasing"));
+}
+
 void UGrabber::GetReferencesToComponents()
 {
 	/// physics handler
@@ -82,6 +87,7 @@ void UGrabber::GetReferencesToComponents()
 	else
 	{
 		InputComponent->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
+		InputComponent->BindAction("Grab", IE_Released, this, &UGrabber::Release);
 	}
 }
 
