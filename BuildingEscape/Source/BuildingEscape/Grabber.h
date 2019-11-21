@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "Grabber.generated.h"
 
+class UPhysicsHandleComponent;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BUILDINGESCAPE_API UGrabber : public UActorComponent
@@ -25,4 +26,5 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 private:
 	UPROPERTY(EditAnywhere) int32 Reach = 50;
+	UPhysicsHandleComponent* PhysicsHandler = nullptr;
 };

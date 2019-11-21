@@ -6,6 +6,8 @@
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
 #include "DrawDebugHelpers.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
+#include "GameFramework/Actor.h"
 
 // Sets default values for this component's properties
 UGrabber::UGrabber()
@@ -24,6 +26,11 @@ void UGrabber::BeginPlay()
 	Super::BeginPlay();
 
 	UE_LOG(LogTemp, Warning, TEXT("Grabber ready"));
+	PhysicsHandler = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	if (PhysicsHandler == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No PhysicsHandler Component is attached to %s"), *(GetOwner()->GetName()));
+	}
 }
 
 
@@ -50,7 +57,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	);
 
 	AActor* Actor = Hit.GetActor();
-	if (Actor)
+	if (Actor != nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("%s"), *(Actor->GetName()));
 	}
