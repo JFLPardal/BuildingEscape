@@ -22,7 +22,7 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	void GetReferencesToComponents();
+	void SetupReferencesToComponents();
 
 public:	
 	// Called every frame
@@ -34,4 +34,8 @@ private:
 
 	void Grab();
 	void Release();
+
+	void SetupPhysicsHandlerComponent();
+	void SetupInputComponent();
+	FHitResult GetFirstPhysicsBodyInReach() const;
 };
