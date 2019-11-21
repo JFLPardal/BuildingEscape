@@ -8,6 +8,7 @@
 #include "DrawDebugHelpers.h"
 #include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "GameFramework/Actor.h"
+#include "Components/InputComponent.h"
 
 // Sets default values for this component's properties
 UGrabber::UGrabber()
@@ -22,17 +23,12 @@ UGrabber::UGrabber()
 
 // Called when the game starts
 void UGrabber::BeginPlay()
-{
+{ 
 	Super::BeginPlay();
 
 	UE_LOG(LogTemp, Warning, TEXT("Grabber ready"));
-	PhysicsHandler = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
-	if (PhysicsHandler == nullptr)
-	{
-		UE_LOG(LogTemp, Error, TEXT("No PhysicsHandler Component is attached to %s"), *(GetOwner()->GetName()));
-	}
+	GetReferencesToComponents();
 }
-
 
 // Called every frame
 void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -60,6 +56,32 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	if (Actor != nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("%s"), *(Actor->GetName()));
+	}
+}
+
+void UGrabber::Grab()
+{
+	UE_LOG(LogTemp, Warning, TEXT("grabbing"));
+}
+
+void UGrabber::GetReferencesToComponents()
+{
+	/// physics handler
+	PhysicsHandler = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	if (PhysicsHandler == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No PhysicsHandler Component is attached to %s"), *(GetOwner()->GetName()));
+	}
+
+	/// input component
+	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	if (InputComponent == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No InputComponent is attached to %s"), *(GetOwner()->GetName()));
+	}
+	else
+	{
+		InputComponent->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
 	}
 }
 
