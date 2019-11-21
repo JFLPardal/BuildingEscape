@@ -23,5 +23,6 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
+private:
+	UPROPERTY(EditAnywhere) int32 Reach = 50;
 };
