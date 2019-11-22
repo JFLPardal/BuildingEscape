@@ -23,6 +23,10 @@ void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
 	Owner = GetOwner();
+	if (PressurePlate == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No PressurePlate is attached to %s"), *Owner->GetName());
+	}
 }
 
 // Called every frame
@@ -43,14 +47,16 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 float UOpenDoor::GetMassOfActorsOnPlate()
 {
+	float TotalMass = 0.f; 
+	if (PressurePlate == nullptr) { return TotalMass; }
+
 	TArray<AActor*> ActorsOverlapping;
 	PressurePlate->GetOverlappingActors(ActorsOverlapping);
-	float TotalMass = 0.f; 
+
 	for (const auto* Actor : ActorsOverlapping)
 	{
 		TotalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
 	}
-	UE_LOG(LogTemp, Warning, TEXT("%f"), TotalMass);
 	return TotalMass;
 }
 
