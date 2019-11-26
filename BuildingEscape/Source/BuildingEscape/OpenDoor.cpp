@@ -34,7 +34,7 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	float CurrentTime = GetWorld()->GetTimeSeconds();
-	if (GetMassOfActorsOnPlate() > MassToTriggerPlate)
+	if (GetMassOfActorsOnPlate() >= MassToTriggerPlate)
 	{
 		OpenDoor();
 	}
